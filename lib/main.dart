@@ -15,6 +15,10 @@ void main() {
       useMaterial3: true,
     ),
     home: const HomePage(),
+    routes: {
+      '/login/': (context) => const LoginView(),
+      '/register/': (context) => const RegisterView()
+    },
   ));
 }
 
