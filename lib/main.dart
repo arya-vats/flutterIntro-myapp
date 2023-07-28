@@ -29,7 +29,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Main view')),
       body: FutureBuilder(
           future: Firebase.initializeApp(
             options: DefaultFirebaseOptions.currentPlatform,
@@ -42,7 +41,7 @@ class HomePage extends StatelessWidget {
                   return const LoginView();
                 } else {
                   if (user.emailVerified == true) {
-                    return const Text('You are a verified user');
+                    return const NotesView();
                   } else {
                     return const VerifyEmailView();
                   }
@@ -57,6 +56,41 @@ class HomePage extends StatelessWidget {
                 return const CircularProgressIndicator();
             }
           }),
+    );
+  }
+}
+
+enum MenuAction { logout }
+
+class NotesView extends StatefulWidget {
+  const NotesView({super.key});
+
+  @override
+  State<NotesView> createState() => _NotesViewState();
+}
+
+class _NotesViewState extends State<NotesView> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Main Page'), actions: [
+        PopupMenuButton<MenuAction>(
+          onSelected: (value) {
+            if (value == MenuAction.logout) {
+              print('logged out');
+            }
+          },
+          itemBuilder: (context) {
+            return [
+              const PopupMenuItem<MenuAction>(
+                  value: MenuAction.logout, child: Text('logout'))
+            ];
+          },
+        )
+      ]),
+      body: Column(children: [
+        TextButton(onPressed: () {}, child: const Text('Do something'))
+      ]),
     );
   }
 }
